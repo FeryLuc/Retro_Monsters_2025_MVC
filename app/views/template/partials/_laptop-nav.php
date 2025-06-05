@@ -1,13 +1,13 @@
 <nav class="container mx-auto px-4 py-4 mb-16 flex justify-between items-center">
     <div class="flex items-center">
-        <a href="#">
+        <a href="?">
             <img
                 src="images/Logo_RetroMonsters.png"
                 alt="RetroMonsters Logo"
                 class="h-32 mr-3 absolute"
                 style="top: -28px"/>
         </a>
-        <a href="#" class="text-white font-bold text-xl hidden">RetroMonsters</a>
+        <a href="?" class="text-white font-bold text-xl hidden">RetroMonsters</a>
     </div>
 
     <button @click="open = !open" class="text-white md:hidden">
@@ -17,11 +17,11 @@
     <div class="hidden md:flex items-center">
         <a
         class="text-gray-300 hover:text-white px-3 py-2 hover:bg-gray-700"
-        href="#"
+        href="?monsters"
         >Monstres</a>
         <a
         class="text-gray-300 hover:text-white px-3 py-2 hover:bg-gray-700 active"
-        href="#"
+        href="?addMonster"
         >Ajouter un monstre</a>
         <!-- <a
         class="text-gray-300 hover:text-white px-3 py-2 hover:bg-gray-700"
