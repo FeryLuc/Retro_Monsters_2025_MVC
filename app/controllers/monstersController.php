@@ -6,7 +6,7 @@ use \App\Models\MonstersModel;
 
 function indexAction(PDO $connexion){
     include '../app/models/monstersModel.php';
-    $monsters = MonstersModel\findAll($connexion);
+    $monsters = MonstersModel\findAll($connexion, 9);
 
     GLOBAL $content;
 

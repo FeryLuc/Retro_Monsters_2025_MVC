@@ -9,7 +9,7 @@
             <img
             class="w-full h-48 object-cover rounded-t-lg"
             src="../public/images/<?php echo $monster['image_url']; ?>"
-            alt="AbyssalRevenant"/>
+            alt="<?php echo $monster['name']; ?>"/>
             <div class="p-4">
             <h3 class="text-xl font-bold"><?php echo $monster['monster_name']; ?></h3>
             <h4 class="mb-2">
