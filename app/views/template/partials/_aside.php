@@ -1,9 +1,11 @@
 <!-- Formulaire de Recherche Full Texte -->
+ <!-- L'action d'un formulaire remplace toute les variable d'url par les champs name des champs du form. Passer par un input caché pour conserver la variable monsters et pouvoir gérer la route dans le sous routeur monsters.php (retirer l'action du form ou le laisser vide) -->
 <form
-    action="/recherche-texte"
+    action="" 
     method="GET"
     class="bg-gray-700 rounded-lg shadow-lg p-4 mb-6">
     <h2 class="font-bold text-lg mb-4">Recherche</h2>
+    <input type="hidden" name="monsters" value="texte">
     <input
     type="text"
     name="texte"
@@ -18,28 +20,29 @@
 
 <!-- Formulaire de Recherche par Critères -->
 <form
-    action="/recherche-criteres"
+    action=""
     method="GET"
     class="bg-gray-700 rounded-lg shadow-lg p-4">
     <h2 class="font-bold text-lg mb-4">Filtrer par Critères</h2>
-
+    <input type="hidden" name="monsters" value="filtre">
     <!-- Type -->
     <select name="type" class="w-full p-2 mb-4 bg-gray-800 rounded">
         <option value="" disabled selected>Choisir un type</option>
-        <option value="aquatique">Aquatique</option>
-        <option value="terrestre">Terrestre</option>
-        <option value="volant">Volant</option>
-        <option value="cosmique">Cosmique</option>
-        <option value="spectral">Spectral</option>
+        <option value="Aquatique">Aquatique</option>
+        <option value="Terrestre">Terrestre</option>
+        <option value="Volant">Volant</option>
+        <option value="Cosmique">Cosmique</option>
+        <option value="Spectral">Spectral</option>
+        <!-- <option value="Légendaire">Spectral</option> -->
     </select>
 
     <!-- Rareté -->
-    <select name="rarete" class="w-full p-2 mb-4 bg-gray-800 rounded">
+    <select name="rarity" class="w-full p-2 mb-4 bg-gray-800 rounded">
         <option value="" disabled selected>Choisir une rareté</option>
-        <option value="commun">Commun</option>
-        <option value="rare">Rare</option>
-        <option value="epique">Épique</option>
-        <option value="legendaire">Légendaire</option>
+        <option value="Commun">Commun</option>
+        <option value="Rare">Rare</option>
+        <option value="Épique">Épique</option>
+        <option value="Légendaire">Légendaire</option>
     </select>
 
     <!-- PV -->
