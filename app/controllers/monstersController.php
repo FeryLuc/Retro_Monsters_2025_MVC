@@ -5,12 +5,22 @@ use \PDO;
 use \App\Models\MonstersModel;
 
 function indexAction(PDO $connexion){
-    include '../app/models/monstersModel.php';
-    $monsters = MonstersModel\findAll($connexion, 9);
+    $page = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
+    $perPage = 9; // nombre de monstres par page
+    $offset = ($page - 1) * $perPage;
 
+    include '../app/models/monstersModel.php';
+    $monsters = MonstersModel\findAll($connexion, $perPage, $offset);
+    $total = MonstersModel\countAll($connexion);
+    $totalPages = (int) ceil($total / $perPage);
+    
+    // var_dump($totalPages, $page, $total);
+    // total et pages sont locale donc pas besoin de chercher des variable dans le scope globale pour y accéder car elles déjà là !!!
+    // GLOBAL $page;
+    // GLOBAL $totalPages;
     GLOBAL $content;
     GLOBAL $title;
-
+    // var_dump($totalPages, $page, $total);
     $title = 'Derniers monstres ajoutés';
     ob_start();
     include '../app/views/monsters/index.php';
@@ -52,7 +62,6 @@ function filterAction(PDO $connexion){
     $max_attaque = $_GET['max_attaque'] ?? null;
 
     $monsters = MonstersModel\findByFilters($connexion, $type, $rarity, $min_pv, $max_pv, $min_attaque, $max_attaque);
-
 
     GLOBAL $content;
     GLOBAL $title;

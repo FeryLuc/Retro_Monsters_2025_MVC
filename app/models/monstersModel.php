@@ -3,14 +3,17 @@
 namespace App\Models\MonstersModel;
 use \PDO;
 
-function findAll(PDO $connexion, ?int $limit = null){
-    $sql = 'SELECT *, monsters.id AS monsterId, monsters.name AS monster_name, monster_types.name AS type_name FROM monsters JOIN monster_types ON monster_types.id = monsters.type_id ORDER BY monsters.created_at DESC';
+function findAll(PDO $connexion, ?int $limit = null, int $offset = 0){
+    $sql = 'SELECT *, monsters.id AS monsterId, monsters.name AS monster_name, monster_types.name AS type_name 
+            FROM monsters 
+            JOIN monster_types ON monster_types.id = monsters.type_id ORDER BY monsters.created_at DESC';
     if ($limit !== null) {
-        $sql .= ' LIMIT :limit';
+        $sql .= ' LIMIT :limit OFFSET :offset';
     }
     $rs = $connexion->prepare($sql);
     if ($limit !== null) {
         $rs->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $rs->bindValue(':offset', $offset, PDO::PARAM_INT);
     }
     $rs->execute();
     $monsters = $rs->fetchAll(PDO::FETCH_ASSOC);
@@ -18,7 +21,9 @@ function findAll(PDO $connexion, ?int $limit = null){
 }
 
 function findOneById(PDO $connexion, int $id){
-    $sql = 'SELECT *, monsters.id AS monsterId, monsters.name AS monster_name, monster_types.name AS type_name FROM monsters JOIN monster_types ON monster_types.id = monsters.type_id WHERE monsters.id = :id;';
+    $sql = 'SELECT *, monsters.id AS monsterId, monsters.name AS monster_name, monster_types.name AS type_name 
+            FROM monsters 
+            JOIN monster_types ON monster_types.id = monsters.type_id WHERE monsters.id = :id;';
     $rs = $connexion->prepare($sql);
     $rs->bindValue(':id', $id, PDO::PARAM_INT);
     $rs->execute();
@@ -38,11 +43,13 @@ function findByName(PDO $connexion, string $texte) {
     return $rs->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function findByFilters(PDO $connexion, $type, $rarity, $min_pv, $max_pv, $min_attaque, $max_attaque){
-
-    $sql = 'SELECT *, monsters.id AS monsterId, monsters.name AS monster_name, monster_types.name AS type_name FROM monsters JOIN monster_types ON monster_types.id = monsters.type_id WHERE 1=1';
+function findByFilters(PDO $connexion, ?string $type, ?string $rarity, ?int $min_pv, ?int $max_pv, ?int $min_attaque, ?int $max_attaque){
+// Where 1=1 est une astuce sql. étant toujours vraie elle permet d'accumuler les AND sans se soucier de la syntaxe de la première condition (WHERE AND)
+    $sql = 'SELECT *, monsters.id AS monsterId, monsters.name AS monster_name, monster_types.name AS type_name 
+            FROM monsters 
+            JOIN monster_types ON monster_types.id = monsters.type_id WHERE 1=1';
     $params = [];
-//  var_dump($type, $rarity, $min_pv, $max_pv, $min_attaque,$max_attaque); exit;
+//  var_dump($type, $rarity, $min_pv, $max_pv, $min_attaque,    $max_attaque); exit;
     if ($type) {
         $sql .= ' AND monster_types.name = :type';
         $params[':type'] = $type;
@@ -77,6 +84,11 @@ function findByFilters(PDO $connexion, $type, $rarity, $min_pv, $max_pv, $min_at
 // exit;
     $rs->execute();
     return $rs->fetchAll(PDO::FETCH_ASSOC);
+}
+// compter les monstres
+function countAll(PDO $connexion) {
+    $sql = 'SELECT COUNT(*) FROM monsters';
+    return $connexion->query($sql)->fetchColumn();
 }
 function addOneMonster(PDO $connexion){
 

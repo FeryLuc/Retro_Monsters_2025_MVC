@@ -2,7 +2,7 @@
     <h2 class="text-2xl font-bold mb-4 creepster"><?php echo $title; ?></h2>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         <?php if (empty($monsters)): ?>
-            <p class="text-white">Aucun monstre trouvé.</p>
+            <p class="text-red-500">Aucun monstre trouvé. Testez d'autres filtres.</p>
         <?php endif; ?>
         <!-- Monster Item -->
          <?php foreach($monsters as $monster): ?>
@@ -58,3 +58,20 @@
         <!-- Répétez pour d'autres monstres -->
     </div>
 </section>
+<!-- <p>test avant pagination</p> -->
+ <!-- bien checker si totalPages existe car j'utilise la meme vue pour plusieurs routes. cela evite les erreur venu d'autre action sur cette meme vue qui ne possède pas totalpage ou page -->
+<?php if (isset($totalPages) && $totalPages > 1): ?>
+    <!-- <p>Test après pagination</p> -->
+    <nav class="flex justify-center mt-8">
+        <ul class="flex gap-2">
+            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                <li>
+                    <a href="?monsters&page=<?php echo $i; ?>"
+                    class="px-3 py-2 border <?php echo $i == $page ? 'bg-red-500 text-white' : 'bg-gray-700 text-gray-300'; ?>">
+                        <?php echo $i; ?>
+                    </a>
+                </li>
+            <?php endfor; ?>
+        </ul>
+    </nav>
+<?php endif; ?>
