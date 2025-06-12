@@ -41,7 +41,7 @@ function showAction(PDO $connexion){
 function searchAction(PDO $connexion){
     include '../app/models/monstersModel.php';
     $inputValue = $_GET['texte'] ?? '';
-    $monsters = MonstersModel\findByName($connexion, $inputValue);
+    $monsters = MonstersModel\findByText($connexion, $inputValue);
 
     GLOBAL $content;
     GLOBAL $title;

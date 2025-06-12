@@ -31,14 +31,46 @@ function findOneById(PDO $connexion, int $id){
     return $monster;
 }
 
-function findByName(PDO $connexion, string $texte) {
+function findOneByRandom(PDO $connexion){
+    $sql = 'SELECT *, monsters.id AS monsterId, monsters.name AS monster_name, monster_types.name AS type_name 
+            FROM monsters 
+            JOIN monster_types ON monster_types.id = monsters.type_id ORDER BY RAND() LIMIT 1';
+    $rs = $connexion->query($sql);
+    $rs->execute();
+    return $rs->fetch(PDO::FETCH_ASSOC);
+}
+//Classique recherche.
+// function findByText(PDO $connexion, string $texte) {
+//     $sql = 'SELECT *, monsters.id AS monsterId, monsters.name AS monster_name, monster_types.name AS type_name 
+//             FROM monsters 
+//             JOIN monster_types ON monster_types.id = monsters.type_id 
+//             WHERE monsters.name LIKE :texte
+//             ORDER BY monsters.created_at DESC';
+//     $rs = $connexion->prepare($sql);
+//     $rs->bindValue(':texte', '%' . $texte . '%', PDO::PARAM_STR);
+//     $rs->execute();
+//     return $rs->fetchAll(PDO::FETCH_ASSOC);
+// }
+function findByText(PDO $connexion, string $texte) {
     $sql = 'SELECT *, monsters.id AS monsterId, monsters.name AS monster_name, monster_types.name AS type_name 
             FROM monsters 
             JOIN monster_types ON monster_types.id = monsters.type_id 
-            WHERE monsters.name LIKE :texte
-            ORDER BY monsters.created_at DESC';
+            WHERE 1=1';
+
+    $params = [];
+    //Split sur tout ce qui est un espace entre les mots
+    $mots = preg_split('/\s+/', trim($texte));
+    //Pour chaque mot dans le tableau on construit notre requete en créant dans le tabeau params les clé-valeur (:mot0 = un mot (préparer pour la recherche))
+    foreach($mots as $index => $mot){
+        $sql .= " AND (monsters.name LIKE :mot{$index} OR monsters.description LIKE :mot{$index} OR monsters.rarity LIKE :mot{$index})";
+        $params[":mot{$index}"] = '%'.$mot.'%';
+    }
+    $sql .= ' ORDER BY monsters.created_at DESC;';
     $rs = $connexion->prepare($sql);
-    $rs->bindValue(':texte', '%' . $texte . '%', PDO::PARAM_STR);
+    //on bind chaque :mot à leur valeur %..%
+    foreach($params as $key => $value){
+        $rs->bindValue($key, $value, PDO::PARAM_STR);
+    }
     $rs->execute();
     return $rs->fetchAll(PDO::FETCH_ASSOC);
 }

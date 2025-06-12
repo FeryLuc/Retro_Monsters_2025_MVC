@@ -7,10 +7,10 @@
         include '../app/models/monstersModel.php';
         $monsters = MonstersModel\findAll($connexion, 3);
 
-        $allMonsters = MonstersModel\findAll($connexion);
-        $totalMonsters = count($allMonsters);
-        $randomNbr = random_int(1, $totalMonsters);
-        $monster = MonstersModel\findOneById($connexion, $randomNbr);
+        // $totalMonsters = MonstersModel\countAll($connexion);
+        // $randomNbr = random_int(1, $totalMonsters);
+        //$monster = MonstersModel\findOneById($connexion, $randomNbr);
+        $monster = MonstersModel\findOneByRandom($connexion);
 
         GLOBAL $content;
         GLOBAL $title;
