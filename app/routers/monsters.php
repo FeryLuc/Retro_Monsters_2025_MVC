@@ -8,10 +8,10 @@ use \App\Controllers\MonstersController;
         case 'show':
             MonstersController\showAction($connexion);
             break;
-        case 'texte':
+        case 'text':
             MonstersController\searchAction($connexion);
             break;
-        case 'filtre':
+        case 'filter':
             MonstersController\filterAction($connexion);
             break;
         default:

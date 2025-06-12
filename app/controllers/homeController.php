@@ -10,7 +10,7 @@
         // $totalMonsters = MonstersModel\countAll($connexion);
         // $randomNbr = random_int(1, $totalMonsters);
         //$monster = MonstersModel\findOneById($connexion, $randomNbr);
-        $monster = MonstersModel\findOneByRandom($connexion);
+        $monster = MonstersModel\findOneByRand($connexion);
 
         GLOBAL $content;
         GLOBAL $title;

@@ -6,7 +6,7 @@
     class="bg-gray-700 rounded-lg shadow-lg p-4 mb-6">
     <h2 class="font-bold text-lg mb-4">Recherche</h2>
     <!-- crée une première variable d'url ?monsters=texte -->
-    <input type="hidden" name="monsters" value="texte">
+    <input type="hidden" name="monsters" value="text">
     <input
     type="text"
     name="texte"
@@ -25,7 +25,7 @@
     method="GET"
     class="bg-gray-700 rounded-lg shadow-lg p-4">
     <h2 class="font-bold text-lg mb-4">Filtrer par Critères</h2>
-    <input type="hidden" name="monsters" value="filtre">
+    <input type="hidden" name="monsters" value="filter">
     <!-- Type -->
      <!-- Les values des options doivent être identique aux valeurs en base. -->
     <select name="type" class="w-full p-2 mb-4 bg-gray-800 rounded">

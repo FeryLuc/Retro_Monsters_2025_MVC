@@ -31,12 +31,11 @@ function findOneById(PDO $connexion, int $id){
     return $monster;
 }
 
-function findOneByRandom(PDO $connexion){
+function findOneByRand(PDO $connexion){
     $sql = 'SELECT *, monsters.id AS monsterId, monsters.name AS monster_name, monster_types.name AS type_name 
             FROM monsters 
             JOIN monster_types ON monster_types.id = monsters.type_id ORDER BY RAND() LIMIT 1';
     $rs = $connexion->query($sql);
-    $rs->execute();
     return $rs->fetch(PDO::FETCH_ASSOC);
 }
 //Classique recherche.
